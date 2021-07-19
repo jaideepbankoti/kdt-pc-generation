@@ -2,7 +2,7 @@ import os
 import numpy as np
 import h5py
 import matplotlib.pyplot as plt
-from utils.helpers import process_points
+from utils.helpers import process_points, create_dataset
 import tqdm
 from sklearn.utils.extmath import randomized_svd
 from pathlib import Path
@@ -89,18 +89,25 @@ def rot_fig(f1, f2, f3, f4, f5, f6):
         plt.savefig("gifs_data/movie%d.png" % ii)
 
 def full_dataset_svd(full_dataset, i):
-    U, S, Vt = randomized_svd(full_dataset.reshape(5000, 3000).T - np.mean(full_dataset.reshape(5000, 3000).T, axis=0), 100)
+    U, S, Vt = randomized_svd(full_dataset.reshape(5000, 3000).T, 100)
     return (U @ np.diag(S) @ Vt[:, i]).reshape(-1, 3)
 
 
 def main():
-    full_dataset = h_read('full_dataset.h5', 'data')
+    full_dataset_r = h_read('SVD_reconstruct.h5', 'data')
     # full_dataset = create_original_dataset(data_dir=DATA_DIR, parse_func=process_points)
-    f1 = full_dataset_svd(full_dataset, 100)
-    f2 = full_dataset_svd(full_dataset, 200)
-    f3 = full_dataset_svd(full_dataset, 300)
-    f4 = full_dataset_svd(full_dataset, 400)
-    f5 = full_dataset_svd(full_dataset, 500)
-    f6 = full_dataset_svd(full_dataset, 600)
+    # full_dataset, _ = create_dataset(data_dir=DATA_DIR, parse_func=process_points)
+    # f1 = full_dataset[0]
+    # f2 = full_dataset[150]
+    # f3 = full_dataset[240]
+    # f4 = full_dataset[350]
+    # f5 = full_dataset[450]
+    # f6 = full_dataset[550]
+    f1 = full_dataset_svd(full_dataset_r, 0)
+    f2 = full_dataset_svd(full_dataset_r, 150)
+    f3 = full_dataset_svd(full_dataset_r, 240)
+    f4 = full_dataset_svd(full_dataset_r, 350)
+    f5 = full_dataset_svd(full_dataset_r, 450)
+    f6 = full_dataset_svd(full_dataset_r, 550)
     rot_fig(f1, f2, f3, f4, f5, f6)
 
