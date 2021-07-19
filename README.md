@@ -32,10 +32,10 @@ python main.py
 ![](./gifs_data/Before_KDT.gif)
 
 ### After KDT
-![](./gifs_data/Before_KDT.gif)
+![](./gifs_data/After_KDT.gif)
 
 ### SVD Reconstruction after iterative optimizer
-![](./gifs_data/Before_KDT.gif)
+![](./gifs_data/SVD_reconstruct.gif)
 
 ### Some Validation Results
 ![](./gifs_data/valid.gif)
